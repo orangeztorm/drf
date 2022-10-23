@@ -17,4 +17,4 @@ class Product(models.Model):
 
     @property
     def get_discount(self):
-        return 122
+        return "22.0"

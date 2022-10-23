@@ -10,13 +10,17 @@ from rest_framework.decorators import api_view
 # Create your apis here.
 
 
-@api_view(["GET"])
+@api_view(["POST"])
 def api_home(request, *args, **kwargs):
-    instance = Product.objects.all().order_by("?").first()
-    data = {}
- 
-    if instance:
-        # data = model_to_dict(model_data, fields=['id', 'title', 'price'])
-        data = ProductSerializer(instance).data
+    # instance = Product.objects.all().order_by("?").first()
+    # data = {}
 
-    return Response(data)
+    # if instance:
+    #     # data = model_to_dict(model_data, fields=['id', 'title', 'price'])
+    #     data = ProductSerializer(instance).data
+        serializer = ProductSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            instance = serializer.save()
+            return Response(serializer.data)
+  
+    
