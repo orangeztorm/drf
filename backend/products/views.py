@@ -5,7 +5,7 @@ from .models import Product
 from .serializers import ProductSerializer
 
 
-class ProductCreateApiView(generics.CreateAPIView):
+class ProductListCreateApiView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
@@ -18,10 +18,11 @@ class ProductCreateApiView(generics.CreateAPIView):
         if content is None:
             content = title
         serializer.save(content=content)
+        # send a signal
         # return super().perform_create(serializer)
 
 
-product_create_view = ProductCreateApiView.as_view()
+product_list_create_view = ProductListCreateApiView.as_view()
 
 
 class ProductDetailAPIView(generics.RetrieveAPIView):
@@ -30,3 +31,14 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
 
 
 product_detail_view = ProductDetailAPIView.as_view()
+
+
+class ProductListAPIView(generics.ListAPIView):
+    '''
+    Not gonna use
+    '''
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+product_list_view = ProductListAPIView.as_view()
