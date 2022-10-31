@@ -1,5 +1,5 @@
 from re import A
-from rest_framework import generics, mixins
+from rest_framework import generics, mixins, permissions, authentication
 
 from .models import Product
 
@@ -17,6 +17,8 @@ from django.http import Http404
 class ProductListCreateApiView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    authentication_classes = [authentication.SessionAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
 
     # it gets called only on only the createApiView
     def perform_create(self, serializer):
