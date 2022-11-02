@@ -1,6 +1,8 @@
 from re import A
 from rest_framework import generics, mixins, permissions, authentication
 
+from .permissions import IsStaffEditorPermission
+
 from .models import Product
 
 from .serializers import ProductSerializer
@@ -18,7 +20,7 @@ class ProductListCreateApiView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.DjangoModelPermissions]
+    permission_classes = [IsStaffEditorPermission]
 
     # it gets called only on only the createApiView
     def perform_create(self, serializer):
